@@ -6,7 +6,7 @@ var clients_served = 0;
 var cars_sold = 0;
 var amount = 0;
 var brandcost = new Array(72500, 23930, 31260, 43990)
-
+//comments
 function newClient(){
 	var preference = Math.floor((Math.random()*4));
 	var time = Math.floor((Math.random()*10000)+1);
