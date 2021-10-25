@@ -8,7 +8,7 @@ var amount = 0;
 var brandcost = new Array(72500, 23930, 31260, 43990)
 
 var questions = [
-		"qns":"___ you happy today?",
+		"qns":"you happy today?",
 	"no" : "1",
 	"correctAns": "c",
 	"points" : "2",
@@ -261,7 +261,7 @@ function() {
 
 $(
     function() {
-		makeAllCarBrandDroppable();
+		makeAllCarBrandsDroppable();
 		newClient();
 		makeExitDroppable();
 		makeCashierDroppable();
