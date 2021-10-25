@@ -6,6 +6,77 @@ var clients_served = 0;
 var cars_sold = 0;
 var amount = 0;
 var brandcost = new Array(72500, 23930, 31260, 43990)
+
+var questions = [
+		"qns":"___ you happy today?",
+	"no" : "1",
+	"correctAns": "c",
+	"points" : "2",
+	"choices" : [{
+		  "title": "at",
+		  "no" : "a" 
+		},
+		{
+		   "title": "was",
+		   "no" : "b" 
+		},
+		{
+		    "title": "are",
+		    "no" : "c" 
+		},
+		{
+		     "title": "were",
+		     "no" : "d" 
+		}
+	  ],
+
+]
+{
+	"qns":"Where ___ you from?",
+	"no" : "3",
+	"correctAns": "c",
+	"points" : "2",
+	"choices" : [{
+		"title" : "to",
+		"no" : "a"
+	},
+				 {
+		"title" : "at",
+		"no" : "b"
+	},
+	{
+		"title" : "are",
+		"no" : "c"
+	},
+	{
+		"title" : "were",
+		"no" : "d"
+	}
+				 ]
+}
+{
+	"qns":"Will you come ___ class tommorow?",
+	"no" : "2",
+	"correctAns": "d",
+	"points" : "2",
+	"choices" : [{
+		  "title" : "was",
+		  "no" : "a"
+	},
+	{
+		"title" : "in",
+		"no" : "b"
+	},
+    {
+		"title" : "at",
+		"no" : "c"
+	},
+	{
+	   "title" : "to",
+		"no" : "d"
+	}
+				 ]
+},
 function newClient(){
 	var preference = Math.floor((Math.random()*4));
 	var time = Math.floor((Math.random()*10000)+1);
@@ -54,6 +125,7 @@ function makeCarBoxesDroppable(brand) {
 				$dragBox.css(removeMarginStyle);
 				count--;
 				$dragBox.addClass('selected');
+				currentClient = $dragBox;
 				next_qns();
 				var dialogOption = { scrolling: 'no'};
 				$.fancybox.open("#mcq",dialogOption);	
@@ -132,13 +204,13 @@ function showCashierDialog(dragClient) {
 								cars_sold += 1;
 								amount += calcost(dragClient);
 								update();
-								removeBox(dragClient, -235);
+								removeBox(dragClient, "-=210");
 								$( this ).dialog( "close" );
 							},
 					 
 					         "No and Exit": function() {
 								 
-								 removeBox(dragClient, -250);
+								 removeBox(dragClient, "-=210");
 								 $( this ).dialog( "close" );
 							 }
 							},
@@ -189,7 +261,7 @@ function() {
 
 $(
     function() {
-		makeAllCarBrandsDroppable();
+		makeAllCarBrandDroppable();
 		newClient();
 		makeExitDroppable();
 		makeCashierDroppable();
@@ -252,11 +324,11 @@ function next_qns() {
 	else {
 		qnsIndex =0;
 		var totalScore = 0;
-		for(var i=0;selection.length;i++) {
+		for(var i=0;i<selection.length;i++) {
 			var selection = selections[i];
 			var question = null;
 			for(var h=0;h<questions.length;h++) {
-			    var q = question[h];
+			    var q = questions[h];
 				if(q.no == selection.qnsNo) {
 					question = q;
 					break;
@@ -269,7 +341,7 @@ function next_qns() {
 		
 		var totalMarks =0;
 		for(var h=0;h<questions.length;h++) {
-			var q = question[h];
+			var q = questions[h];
 			totalMarks += parseInt(question.points);
 		        }
 		
@@ -278,9 +350,79 @@ function next_qns() {
 		if(percScore > 50) {
 			failed = false;
 		}
-		alert("Fail?:" + failed + " Result:" + totalScore + "/" + totalMarks);
+		
+		var resultPanel = $("#result-panel");
+		resultPanel.css("display","block");
+		
+		var questionPanel = $("#question-panel");
+		questionPanel.css("display","block");
+		
+		var scoreBox = $("totalScore");
+		scoreBox.html("Score: " + totalScore + "/" + totalMarks);
+		
+		var result = "";
+		if(failed == true) {
+			result = "<img src='images/tenor.gif' width='250' height='200' alt='failed'/>";
+			}
+		else {
+			result = "<img src='images/excellent.png' width='250' height='200' alt='failed'/>";
+		}
+		var myresult = $("#myresult");
+		myresult.html(result);
+		
+		var closeResultButton = $("#closeResultButton");
+		closeResultButton.click(function() {
+			$.fancybox.close()
+			selections = [];
+			questionPanel.css("display","block");
+			resultPanel.css("display","block");
+			
+			var clientX = currentClient.offset().left;
+			var clientY = currentClient.offset().top;
+			if(failed == true) {
+				var exit = $("#exit_img_holder");
+				var exitX = exit.offset().left;
+				var exitY = exit.offset().top;
+				
+				var diffX = exitX - clientX;
+				var diffY = exitY - clientY;
+				
+				currentClient.css("zIndex",3000);
+				currentClient.animate (
+				{
+					  left: "+=" + diffX,
+					  top: "+=" + diffY,
+				},
+					1000).fadeOut(2000,function() {
+					count--;
+					newClient();
+					
+				}
+				);
+			}
+			else {
+				var cashier = $("#cashier_img_holder");
+				var cashier = cashier.offset().left;
+				var cashier = cashier.offset().top;
+				
+				var diffX = cashierX - clientX;
+				var diffY = cashierY - clientY;
+				
+				currentClient.css("zIndex",3000);
+				currentClient.animate (
+				{
+					  left: "+=" + diffX,
+					  top: "+=" + diffY,
+				},
+					1000, function() {
+						showCashierDialog(currentClient);
+					});
+			}
+			closeResultButton.unbind();
+		});
 }
-
+	
+}
 function ansBox_click(selectionChoice) {
 	var optA_Box = $("#optionA");
 	var optB_Box = $("#optionB");
@@ -309,5 +451,3 @@ function ansBox_click(selectionChoice) {
 	};
 	selections.push(selection);
 }
-
-} 
