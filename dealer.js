@@ -100,7 +100,7 @@ var questions = [{
 
         };
         $firstClient.draggable(clientDragOption);
-        console.log($firstClient.html());
+        //console.log($firstClient.html());
       }
       setTimeout(function () {
         newClient();
@@ -134,15 +134,15 @@ var questions = [{
             "margin-bottom": '0px',
             "margin-left": "-3px"
           };
-          $dragBox.css(removeMarginStyle);
-          count--;
-          $dragBox.addClass('selected');
-          currentClient = $dragBox;
-          next_qns();
-          var dialogOption = {
-            scrolling: 'no'
-          };
-          $.fancybox.open("#mcq", dialogOption);
+			
+      	  	$dragBox.css(removeMarginStyle);
+			count--;
+			$dragBox.addClass('selected');
+			next_qns();
+          	var dialogOption = {
+            	scrolling: 'no'
+          	};
+			$.fancybox.open('#mcq',dialogOption);
         }
       };
 

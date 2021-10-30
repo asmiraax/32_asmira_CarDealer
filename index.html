@@ -28,8 +28,8 @@
 </nav>
 <div id="app">
   <div class="page-panel" id="splash">
-    <div id="logo"> <img src="images/cardealershowroom.jpg">
-		Your Logo 
+    <div id="logo">
+		<img src="images/cardealershowroom.jpg" width="500" height="300">
 	  </div>
     <div class="game-button" onClick="showPage('play')">
 	  START GAME
@@ -84,14 +84,23 @@
       </div>
     </div>
     <div id="dialog">
+		
       <p>Do you want to make payment?</p>
     </div>
   </div>
-  <div id="about" class="page-panel"> About Page </div>
+  <div id="about" class="page-panel"> 
+	Customers arrive at the store are presented in a queue and the
+	queue can only receive a maximum of 10 customers at any one
+	time. Only the first customer in queue can be move, the others
+	must wait for their turn.The application allows the first customer in the queue to be moved
+    to a car according to their preference (Porsche, Volkswagen, Audi
+    or BMW). When the first customer in the queue is moved to a car,
+    a new customer can enter the queue.
+  </div>
   <div id="credits" class="page-panel"> Credits Page </div>
   <div id="help" class="page-panel"> Help Page </div>
 	<div id="mcq" style="display:none">
-	     <div id="question-panel">
+		 <div id="question-panel">
 		<div class="row">
 			 <div class="col-12">
 			<span id="questionTitle"></span>
@@ -111,8 +120,8 @@
 		</div>
 		<div class="col-6">
 		<div class="mcq-choice" id="optionD" onclick="ansBox_click('d')">Answer D</div>		
-	</div>
-			 </div>
+		</div>
+	 	</div>
     <div class="row">
         <div class="col-12">
 		<a onclick="next_qns()">
@@ -129,6 +138,7 @@
 			</div>
 		</div>
 	</div>
+	
 	</div>
 </body>
 </html>
