@@ -372,9 +372,9 @@ function next_qns() {
 
     var result = "";
     if (failed == true) {
-      result = "<img src='images/tenor.gif' width='250' height='200' alt='failed'/>";
+      result = "<img src='images/wrong-lion.gif' width='250' height='200' alt='failed'/>";
     } else {
-      result = "<img src='images/excellent.png' width='250' height='200' alt='failed'/>";
+      result = "<img src='images/excellent-yellow-star.jpg' width='250' height='200' alt='failed'/>";
     }
     var myresult = $("#myresult");
     myresult.html(result);
